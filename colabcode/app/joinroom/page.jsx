@@ -14,7 +14,7 @@ const JoinRoom = () => {
 
     const getAllrooms = async () => {
       try {
-        const res = await axios.get('http://localhost:5050/api/room/getallrooms');
+        const res = await axios.get('https://codecollab-1.onrender.com/api/room/getallrooms');
         setRoomList(res.data);
       } catch (err) {
         console.log(err);
@@ -29,7 +29,7 @@ const JoinRoom = () => {
   const handleJoinRoom = async (room) => {
     console.log(room);
     try {
-      const res = await axios.post("http://localhost:5050/api/room/joinroom", { roomName:room.roomName, roomPassword:room.roomPassword});
+      const res = await axios.post("https://codecollab-1.onrender.com/api/room/joinroom", { roomName:room.roomName, roomPassword:room.roomPassword});
       console.log(res.data);
       setAlertStatus('success');
       window.location.href = `/codeeditor?id=${res.data._id}&name=${userName}`
@@ -41,7 +41,7 @@ const JoinRoom = () => {
 
   const handleSearch=async()=>{
     try{
-      const res=await axios.post('http://localhost:5050/api/room/getroombyname',{roomName})
+      const res=await axios.post('https://codecollab-1.onrender.com/api/room/getroombyname',{roomName})
       //console.log(res.data);
       setRoomList(res.data);
     }catch(err){

@@ -24,7 +24,7 @@ const CodeEditor = () => {
     const [socketId, setSocketId] = useState(null);
     //socket.io logic
     const socket = useMemo(() => {
-        return io("http://localhost:5050", {
+        return io("https://codecollab-1.onrender.com", {
             withCredentials: true,
         });
     }, []);
@@ -57,7 +57,7 @@ const CodeEditor = () => {
         init();
         const syncCode=async()=>{
             try{
-                const res=await axios.get(`http://localhost:5050/api/room/getroombyid?q=${roomId}`);
+                const res=await axios.get(`https://codecollab-1.onrender.com/api/room/getroombyid?q=${roomId}`);
                 const code=res.data.code;
                 if(code!==""){
                     setCodeValue(code);
@@ -163,7 +163,7 @@ const CodeEditor = () => {
     const handleSave=async()=>{
         //console.log(codeValue);
         try{
-            const res=await axios.put('http://localhost:5050/api/room/savecode',{roomId,code:codeValue});
+            const res=await axios.put('https://codecollab-1.onrender.com/api/room/savecode',{roomId,code:codeValue});
             console.log(res.data);
             toast.success('Code saved successfully!');
         }
