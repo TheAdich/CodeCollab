@@ -2,8 +2,10 @@
 import React from 'react'
 import CodeEditor from '../_components/Codeeditor'
 import Image from 'next/image'
+import { Suspense } from 'react'
 const Codeeditor = () => {
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="w-full h-screen p-2">
     <div className="w-full mb-2 flex">
     <Image src='/Codinglogo.jpg' height={30} width={30} onClick={()=>window.location.href='/joinroom'} className='rounded-md mr-2'></Image>
@@ -11,6 +13,8 @@ const Codeeditor = () => {
     </div>
     <CodeEditor />
   </div>
+    </Suspense>
+    
   )
 }
 
