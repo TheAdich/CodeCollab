@@ -7,6 +7,7 @@ import axios from 'axios';
 import OutputLoading from './outputLoading';
 import { useSearchParams } from 'next/navigation';
 import { io } from 'socket.io-client';
+import { Suspense } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 const CodeEditor = () => {
     const editorRef = useRef(null);
@@ -176,30 +177,33 @@ const CodeEditor = () => {
 
     return (
         <React.Fragment>
-            <Toaster />
-            <div className='p-4 w-full'>
-                <div className='flex w-full items-center'>
-                    <div className='w-3/4'>
-                        <Language setLanguage={setLanguage} setLanguageId={setLanguageId} />
-                        <p>Language:{language}</p>
-                    </div>
-                    <button onClick={handleSave} className='bg-blue-400 h-fit text-md rounded-md px-2 mr-4'>Save Changes</button>
-                    <button onClick={handleCompile} disabled={codeLoading} className='bg-blue-400 h-fit text-lg rounded-md px-4'>{codeLoading ? 'Compiling...' : 'Run'}</button>
+        <Suspense fallback={<div>Loading...</div>}>
+        <Toaster />
+        <div className='p-4 w-full'>
+            <div className='flex w-full items-center'>
+                <div className='w-3/4'>
+                    <Language setLanguage={setLanguage} setLanguageId={setLanguageId} />
+                    <p>Language:{language}</p>
                 </div>
-                <div className='flex w-full'>
-                    <Editor onMount={handleEditorMount}
-                        theme='vs-dark'
-                        height="80vh"
-                        width="70vw"
-                        className='border-2 border-white rounded-md'
-                        defaultLanguage='javascript'
-                        language={language}
-                        value={codeValue}
-                        onChange={handlecodechange}
-                        defaultValue="console.log('hi')" />
-                    {codeLoading ? <OutputLoading /> : <Output codeId={codeId} compileresult={compileresult} />}
-                </div>
+                <button onClick={handleSave} className='bg-blue-400 h-fit text-md rounded-md px-2 mr-4'>Save Changes</button>
+                <button onClick={handleCompile} disabled={codeLoading} className='bg-blue-400 h-fit text-lg rounded-md px-4'>{codeLoading ? 'Compiling...' : 'Run'}</button>
             </div>
+            <div className='flex w-full'>
+                <Editor onMount={handleEditorMount}
+                    theme='vs-dark'
+                    height="80vh"
+                    width="70vw"
+                    className='border-2 border-white rounded-md'
+                    defaultLanguage='javascript'
+                    language={language}
+                    value={codeValue}
+                    onChange={handlecodechange}
+                    defaultValue="console.log('hi')" />
+                {codeLoading ? <OutputLoading /> : <Output codeId={codeId} compileresult={compileresult} />}
+            </div>
+        </div>
+        </Suspense>
+            
         </React.Fragment>
 
     )

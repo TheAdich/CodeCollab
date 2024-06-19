@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Alert } from '@mui/material';
+import Image from 'next/image';
 const JoinRoom = () => {
 
   const [roomList, setRoomList] = useState(null);
@@ -51,10 +52,14 @@ const JoinRoom = () => {
     <React.Fragment>
     {status && <Alert className='fixed top-0' severity={status && status}>{status==='success'?"Room joined successfully! Redirecting...":"Error in joining the room!"}</Alert>}
       <div className='bg-black p-4 text-white w-full h-screen'>
+      <div className='flex'>
+      <Image src='/Codinglogo.jpg' height={30} width={30} className='rounded-md mr-2'></Image>
         <p className='text-2xl'>CodeCollab</p>
+        </div>
         <p className='mt-2'>Available Rooms:</p>
         <input type='text' placeholder='Search By name' className='outline-none border-none rounded-md text-black px-2 mb-4' onChange={(e)=>setRoomName(e.target.value)}></input>
         <button className='bg-green-600 px-2 py-1 rounded-md w-fit h-fit ml-4' onClick={handleSearch}>Search</button>
+        <button className='bg-green-600 px-2 py-1 rounded-md w-fit h-fit ml-4' onClick={()=>window.location.href='/createroom'}>Create own Room</button>
         <div className='w-full h-fit bg-slate-700 rounded-lg p-4'>
           {roomList && roomList.map((room, ind) => (
             <div key={ind} className='room_display' style={{ 'marginBottom': '1rem' }}>
